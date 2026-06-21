@@ -1,0 +1,53 @@
+# ===========================
+# Java / Maven (Backend)
+# ===========================
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/*.jar
+backend/*.war
+*.class
+
+# ===========================
+# Node / npm (Frontend)
+# ===========================
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.local
+.env.production
+backend/src/main/resources/application-secret.yml
+
+# ===========================
+# IDEs
+# ===========================
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================
+# Logs
+# ===========================
+*.log
+logs/
+
+# ===========================
+# Docker
+# ===========================
+docker-compose.override.yml
