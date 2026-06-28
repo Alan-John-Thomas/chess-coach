@@ -1,0 +1,36 @@
+spring:
+  # Dev Database overrides (sensible defaults for local run)
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:chesscoach}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Automatically update schema locally during prototyping
+    show-sql: true # Log SQL commands during dev
+    properties:
+      hibernate:
+        format_sql: true
+
+  # Spring AI configuration
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: ${LLM_MODEL:deepseek-r1:7b}
+          temperature: 0.4
+    openai:
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com}
+      api-key: ${OPENAI_API_KEY:mock-key-for-dev-startup}
+      chat:
+        options:
+          model: ${OPENAI_MODEL:gpt-4o-mini}
+          temperature: 0.4
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: INFO
+    com.chesscoach: DEBUG
