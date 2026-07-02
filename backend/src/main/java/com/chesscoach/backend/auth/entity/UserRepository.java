@@ -1,4 +1,4 @@
-package com.chesscoach.backend.auth;
+package com.chesscoach.backend.auth.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

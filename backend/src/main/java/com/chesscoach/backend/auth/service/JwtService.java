@@ -1,5 +1,6 @@
-package com.chesscoach.backend.auth;
+package com.chesscoach.backend.auth.service;
 
+import com.chesscoach.backend.auth.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;

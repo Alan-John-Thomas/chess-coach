@@ -1,5 +1,8 @@
-package com.chesscoach.backend.auth;
+package com.chesscoach.backend.auth.controller;
 
+import com.chesscoach.backend.auth.dto.RegisterRequest;
+import com.chesscoach.backend.auth.entity.User;
+import com.chesscoach.backend.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,8 @@
-package com.chesscoach.backend.auth;
+package com.chesscoach.backend.auth.service;
 
+import com.chesscoach.backend.auth.dto.RegisterRequest;
+import com.chesscoach.backend.auth.entity.User;
+import com.chesscoach.backend.auth.entity.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
