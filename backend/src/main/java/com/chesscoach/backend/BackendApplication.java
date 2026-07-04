@@ -1,4 +1,4 @@
-package com.chesscoach.backend.auth;
+package com.chesscoach.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
