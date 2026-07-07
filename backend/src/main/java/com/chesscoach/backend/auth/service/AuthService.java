@@ -6,6 +6,8 @@ import com.chesscoach.backend.auth.dto.RegisterRequest;
 import com.chesscoach.backend.auth.entity.User;
 import com.chesscoach.backend.auth.entity.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,14 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    //this will call the DaoAuthProvider
+    private final AuthenticationManager authenticationManager;
 
     // registration logic
-    public User register(RegisterRequest request){
+    public User register(RegisterRequest request) {
 
         // check if email taken
-        if(userRepository.findByEmail(request.getEmail()).isPresent()){
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
 
@@ -40,16 +44,23 @@ public class AuthService {
     }
 
     //login logic (login endpoint return a Jwt token)
-    public AuthResponse login(LoginRequest request){
-        //check if user exist
+    public AuthResponse login(LoginRequest request) {
+
+        // 1. Hand the credentials to the Manager (which hands it to our DAO!)
+        // If the password is wrong, this line throws an exception and stops execution.
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        // 2. If we reach this line, the DAO proved the user is legit!
+        // We just fetch them so we can put their details in the JWT.
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(()->new RuntimeException("Invalid email or password"));
-        //check if the password is correct
-        if(!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())){
-            throw new RuntimeException("Invalid email or password");
-        }
-        //generate JWT token and return it
-        String jwtToken=jwtService.generateToken(user);
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 3. Generate JWT token and return it
+        String jwtToken = jwtService.generateToken(user);
         return new AuthResponse(jwtToken);
     }
 }
