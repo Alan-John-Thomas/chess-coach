@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: chess-coach-db
+
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_DB: ${DB_NAME:-chesscoach}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
