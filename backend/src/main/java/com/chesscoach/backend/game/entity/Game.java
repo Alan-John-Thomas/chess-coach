@@ -21,7 +21,7 @@ public class Game {
     @ManyToOne(fetch= FetchType.LAZY) // joins only when needed
     @JoinColumn(name="user_id",nullable = false) //joins the user_id in games with primary key of user
     private User user;
-    @Column(nullable=false)
+    @Column(nullable=false,columnDefinition = "TEXT")
     private String pgn;
     private String whitePlayer;
     private String blackPlayer;
