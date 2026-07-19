@@ -1,0 +1,42 @@
+### 0. Register a new user
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "MagnusCarlsen",
+  "email": "magnus@chess.com",
+  "password": "supersecretpassword"
+}
+
+### 1. Login (Click the green play button next to this line)
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "magnus@chess.com",
+  "password": "supersecretpassword"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### 2. Upload Game (Click green play button)
+POST http://localhost:8080/api/games/upload
+Authorization: Bearer {{auth_token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mygame.pgn"
+Content-Type: application/octet-stream
+
+< C:\Users\Alan\Downloads\Berliner.pgn
+--WebAppBoundary--
+
+### 3. Get Summary List
+GET http://localhost:8080/api/games
+Authorization: Bearer {{auth_token}}
+
+### 4. Get Game Detail (Replace UUID with one from the summary)
+GET http://localhost:8080/api/games/4c6c71da-85f4-4d4e-90c1-2fe7df8f51f0
+Authorization: Bearer {{auth_token}}

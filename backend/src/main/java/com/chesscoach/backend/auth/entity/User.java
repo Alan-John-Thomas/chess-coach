@@ -3,6 +3,7 @@ package com.chesscoach.backend.auth.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,6 +27,7 @@ public class User implements UserDetails {
     private String passwordHash;
     @Column(name="username")
     private String userName;
+    @CreationTimestamp
     @Column(name="created_at",updatable = false)
     private LocalDateTime createdAt;
 

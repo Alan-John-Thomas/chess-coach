@@ -60,7 +60,7 @@ public class SecurityConfig {
 
                         // Any endpoint starting with /api/auth/
                         // (e.g. /login, /register) can be accessed without a JWT.
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
 
                         // Every other endpoint requires the user to be authenticated.
                         .anyRequest().authenticated()
