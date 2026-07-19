@@ -6,6 +6,7 @@ import com.chesscoach.backend.game.dto.GameSummaryDto;
 import com.chesscoach.backend.game.dto.GameUploadResponse;
 import com.chesscoach.backend.game.dto.ParsedGame;
 import com.chesscoach.backend.game.entity.Game;
+import com.chesscoach.backend.game.exception.GameNotFoundException;
 import com.chesscoach.backend.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class GameService {
     // function to get details of a specific game (PGNs,FENs included)
     public GameDetailDto getGameDetail(UUID gameId, UUID userId){
         Game game = gameRepository.findByIdAndUserId(gameId,userId)
-                .orElseThrow(() -> new RuntimeException("Game not found"));;
+                .orElseThrow(() -> new GameNotFoundException("Game not found"));;
 
         ParsedGame parsed = pgnParserService.parsePgn(game.getPgn());
 

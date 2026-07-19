@@ -4,6 +4,7 @@ import com.chesscoach.backend.auth.entity.User;
 import com.chesscoach.backend.game.dto.GameDetailDto;
 import com.chesscoach.backend.game.dto.GameSummaryDto;
 import com.chesscoach.backend.game.dto.GameUploadResponse;
+import com.chesscoach.backend.game.exception.InvalidPgnException;
 import com.chesscoach.backend.game.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class GameController {
             ){
         // check if file empty
         if (file.isEmpty()) {
-            throw new RuntimeException("Cannot upload empty file");
+            throw new InvalidPgnException("Cannot upload empty file");
         }
 
         GameUploadResponse gameUploadResponse=gameService.uploadGame(file,user);

@@ -1,6 +1,7 @@
 package com.chesscoach.backend.game.service;
 
 import com.chesscoach.backend.game.dto.ParsedGame;
+import com.chesscoach.backend.game.exception.InvalidPgnException;
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
 import com.github.bhlangonijr.chesslib.move.Move;
@@ -60,7 +61,7 @@ public class PgnParserService {
             );
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to parse PGN file: " + e.getMessage());
+            throw new InvalidPgnException("Failed to parse PGN file: " + e.getMessage());
         }
     }
 }
