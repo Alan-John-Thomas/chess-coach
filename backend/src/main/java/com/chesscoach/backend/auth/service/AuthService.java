@@ -4,7 +4,7 @@ import com.chesscoach.backend.auth.dto.AuthResponse;
 import com.chesscoach.backend.auth.dto.LoginRequest;
 import com.chesscoach.backend.auth.dto.RegisterRequest;
 import com.chesscoach.backend.auth.entity.User;
-import com.chesscoach.backend.auth.entity.UserRepository;
+import com.chesscoach.backend.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

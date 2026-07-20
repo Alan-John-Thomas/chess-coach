@@ -1,6 +1,6 @@
 package com.chesscoach.backend.auth.service;
 
-import com.chesscoach.backend.auth.entity.UserRepository;
+import com.chesscoach.backend.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
