@@ -8,11 +8,11 @@
 
 Chess Coach is **not another Chess.com clone**. It's an interactive chess *teacher* that bridges the gap between raw engine analysis and human understanding.
 
-- 📤 Upload any PGN game
-- 🤖 Stockfish analyses every position on-demand as you navigate move by move
-- 🧠 Ask the AI coach *"Why was my move bad?"* — get plain-English explanations grounded in engine truth
-- 🎬 Watch the best variation animate on the board
-- 💬 Multi-turn conversation — follow up until you truly understand
+-  Upload any PGN game
+-  Stockfish analyses every position on-demand as you navigate move by move
+-  Ask the AI coach *"Why was my move bad?"* — get plain-English explanations grounded in engine truth
+-  Watch the best variation animate on the board
+-  Multi-turn conversation — follow up until you truly understand
 
 ---
 
@@ -73,23 +73,6 @@ cd backend && mvn spring-boot:run
 # Frontend
 cd frontend && npm install && npm run dev
 ```
-
----
-
-## Project Status
-
-🚧 **In active development — Week 1 of 8**
-
-| Week | Focus | Status |
-|------|-------|--------|
-| 1 | Project setup, Docker, DB schema | 🔄 In Progress |
-| 2 | Authentication (JWT) | 🔒 Locked |
-| 3 | PGN upload & parsing | 🔒 Locked |
-| 4 | Stockfish integration | 🔒 Locked |
-| 5 | Frontend game viewer | 🔒 Locked |
-| 6 | Ollama / LLM integration | 🔒 Locked |
-| 7 | Chat system & board animations | 🔒 Locked |
-| 8 | Polish & deploy | 🔒 Locked |
 
 ---
 
