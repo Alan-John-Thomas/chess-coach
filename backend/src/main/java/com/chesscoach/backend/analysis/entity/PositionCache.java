@@ -18,11 +18,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder // can use constructor with only some of arguments defined , argument order is auto mapped
+
+// NOTE: position cache currently doesn't store mate in moves data.
+// if evaluation is taken from this cache table , on EvaluationResult (dto) make mate in move as NULL.
+// similarly when storing this cache , don't store mate in move
+// analysis service currently doesn't output toplines,move classification.These columns are NULL for now.
 public class PositionCache {
     @Id
     @Column(nullable = false,length = 150)
     private String fen;
-    @Column(precision=8,scale=2)
+    @Column
+    // centipawn
     private Double evaluation;
     @Column(name="best_move")
     private String bestMove;
