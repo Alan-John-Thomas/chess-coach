@@ -66,6 +66,7 @@ public class StockfishClient {
             Double centipawns = null;
             Integer mateInMoves = null;
             String bestMove = null;
+            String principalVariation = null;
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -86,6 +87,12 @@ public class StockfishClient {
                         mateInMoves = Integer.parseInt(parts[0]);
                         centipawns = null;
                     }
+                    // Extract principal variation (engine line)
+                    if (line.contains(" pv ")) {
+                        int pvIndex = line.indexOf(" pv ") + 4;
+                        principalVariation = line.substring(pvIndex);
+                    }
+
                 }
                 // extract the best move
                 if (line.startsWith("bestmove")) {
@@ -96,7 +103,7 @@ public class StockfishClient {
                     break;
                 }
             }
-            return new EvaluationResult(centipawns, mateInMoves, bestMove);
+            return new EvaluationResult(centipawns, mateInMoves, bestMove,principalVariation);
         }
         catch (IOException e){
             log.error("Error communicating with Stockfish during position evaluation", e);
