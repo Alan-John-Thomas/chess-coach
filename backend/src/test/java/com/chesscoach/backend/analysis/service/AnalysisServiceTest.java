@@ -53,7 +53,7 @@ class AnalysisServiceTest {
     @Test
     void analyzePosition_CacheMiss_CallsStockfishAndSavesToCache() {
         String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        EvaluationResult engineResult = new EvaluationResult(0.35, null, "e2e4");
+        EvaluationResult engineResult = new EvaluationResult(0.35, null, "e2e4", "e2e4 e7e5");
 
         when(positionCacheRepository.findById(fen)).thenReturn(Optional.empty());
         when(stockfishClient.evaluatePosition(fen, 18)).thenReturn(engineResult);
