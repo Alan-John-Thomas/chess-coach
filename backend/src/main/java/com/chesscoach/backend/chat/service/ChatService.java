@@ -32,6 +32,7 @@ public class ChatService {
     private final AnalysisService analysisService;
     private final ChessPromptBuilder chessPromptBuilder;
     private final LlmService llmService;
+    private final BoardVariationService boardVariationService;
 
     // Get or create the unique chat session for a game
     @Transactional
@@ -91,16 +92,23 @@ public class ChatService {
         );
         // 5. Generate response from DeepSeek / Ollama
         String responseContent = llmService.generateResponse(prompt);
-        // 6. Save Assistant Message
+
+        // 6. Format raw Stockfish PV string into clean JSON array (capped to top 8 moves)
+        String variationJson = (evaluation != null && evaluation.principalVariation() != null)
+                ? boardVariationService.formatToJson(evaluation.principalVariation(), 8)
+                : null;
+
+        // 7. Save Assistant Message
         ChatMessage assistantMessage = ChatMessage.builder()
                 .session(session)
                 .role(MessageRole.ASSISTANT)
                 .content(responseContent)
                 .moveContextFen(request.moveContextFen())
-                .boardVariation(evaluation != null ? evaluation.principalVariation() : null)
+                .boardVariation(variationJson)
                 .build();
         ChatMessage savedAssistantMsg = chatMessageRepository.save(assistantMessage);
-        // 7. Return to frontend as DTO
+
+        // 8. Return to frontend as DTO
         return ChatMessageDto.fromEntity(savedAssistantMsg);
     }
 }
