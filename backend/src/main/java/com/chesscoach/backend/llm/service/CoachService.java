@@ -24,6 +24,8 @@ public class CoachService {
                 ? userQuestion
                 : "Explain the best plan and key tactical idea in this position.";
         // Build grounded prompt
+        // the prompt building doesn't make use of chat history (as buildPrompt fn is the one called)
+        // this is for quick analysis without any context
         String prompt = chessPromptBuilder.buildPrompt(fen, evaluation, question);
         // Generate LLM explanation
         String explanation = llmService.generateResponse(prompt);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CoachController {
     private final CoachService coachService;
+    // for quick analysis
     @GetMapping("/explain")
     public ResponseEntity<CoachExplanationDto>explainPosition(
             @RequestParam String fen,

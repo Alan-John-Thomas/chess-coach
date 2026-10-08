@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class LlmService {
-
+    //ChatModel is an interface provided by the Spring AI library.
+    //Just like JpaRepository is Spring's standard tool to talk to any database (PostgreSQL, MySQL, H2), ChatModel is Spring's standard tool to talk to any AI (Ollama, OpenAI, Claude, DeepSeek).
     private final ChatModel chatModel;
 
     // since pom.xml has both spring-ai-starter-model-ollama and spring-ai-starter-model-openai
