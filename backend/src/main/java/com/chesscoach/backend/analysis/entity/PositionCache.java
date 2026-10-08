@@ -32,6 +32,8 @@ public class PositionCache {
     private Double evaluation;
     @Column(name="best_move")
     private String bestMove;
+    @Column(name="mate_in_moves")
+    private Integer mateInMoves;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name="top_lines",columnDefinition = "jsonb")
     private String topLines;
