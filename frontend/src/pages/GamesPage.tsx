@@ -35,7 +35,7 @@ export default function GamesPage() {
   );
 }
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   container: {
     padding: '2rem',
     minHeight: '100vh',
