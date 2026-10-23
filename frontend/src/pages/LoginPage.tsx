@@ -8,7 +8,7 @@ export default function LoginPage() {
 
   const handleMockLogin = () => {
     // Set mock user data in our Zustand global state
-    login({ email: 'user@example.com' }, 'mock-jwt-token-12345');
+    login({ id: 'mock-user-1', email: 'user@example.com' }, 'mock-jwt-token-12345');
     // Navigate to /games dashboard
     navigate('/games');
   };
