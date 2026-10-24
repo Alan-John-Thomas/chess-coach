@@ -76,6 +76,8 @@ public class GameService {
         Game game = gameRepository.findByIdAndUserId(gameId,userId)
                 .orElseThrow(() -> new GameNotFoundException("Game not found"));;
 
+        // parsePgn converts pgn to list of moves and list of board states corresponding to each move
+        // this is needed as the database only stores pgn , the board state is determined by making moves on a virtual board inside the parsePgn service
         ParsedGame parsed = pgnParserService.parsePgn(game.getPgn());
 
         return new GameDetailDto(
