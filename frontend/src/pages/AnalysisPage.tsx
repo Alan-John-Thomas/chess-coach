@@ -1,200 +1,89 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import ChessboardPanel from '../components/board/ChessboardPanel';
+import { useAuthStore } from '../store/useAuthStore';
 
 export default function AnalysisPage() {
-  return (
-    <div style={styles.container}>
-      {/* Navbar */}
-      <div style={styles.navbar}>
-        <div style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>♟️ Chess Coach</div>
-        <div style={{ color: '#aaa' }}>Games | Profile | Logout (Mock)</div>
-      </div>
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user);
 
-      {/* Main 3-Panel Layout */}
-      <div style={styles.workspace}>
-        {/* Panel 1: Chessboard Placeholder */}
-        <div style={{ ...styles.panel, flex: 2 }}>
-          <h2 style={styles.panelTitle}>Chessboard</h2>
-          <div style={styles.boardMock}>
-            <span style={{ fontSize: '3rem' }}>🏁</span>
-            <p style={{ marginTop: '1rem', color: '#888' }}>Interactive Chessboard will render here</p>
-          </div>
-          <div style={styles.controlsMock}>
-            ◀ First | ◀ Prev | Next ▶ | Last ▶
-          </div>
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  return (
+    <div className="flex flex-col h-screen w-screen bg-obsidian text-white overflow-hidden select-none font-sans">
+      {/* Top Navigation Bar */}
+      <header className="h-14 border-b border-white/10 px-6 flex items-center justify-between bg-panel shrink-0">
+        <div className="flex items-center gap-3">
+          <span className="text-xl">♟️</span>
+          <span className="font-bold text-base tracking-tight text-white/95">Chess Coach</span>
+          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-medium">
+            Studio
+          </span>
         </div>
 
-        {/* Panel 2: Stockfish Panel Placeholder */}
-        <div style={{ ...styles.panel, flex: 1.2 }}>
-          <h2 style={styles.panelTitle}>Stockfish Engine</h2>
-          <div style={styles.evalBarMock}>
-            <div style={{ height: '50%', backgroundColor: '#fff', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem' }}>
-              +1.4
-            </div>
-            <div style={{ height: '50%', backgroundColor: '#000' }} />
+        <div className="flex items-center gap-4 text-xs">
+          <button
+            onClick={() => navigate('/games')}
+            className="text-white/60 hover:text-white transition cursor-pointer"
+          >
+            ← My Games
+          </button>
+          <div className="w-[1px] h-4 bg-white/10" />
+          <span className="text-white/50">{user?.email || 'Logged In'}</span>
+          <button
+            onClick={handleLogout}
+            className="px-2.5 py-1 bg-surface hover:bg-surface-hover border border-white/10 rounded-md text-white/70 hover:text-white transition cursor-pointer"
+          >
+            Logout
+          </button>
+        </div>
+      </header>
+
+      {/* Main 3-Column Studio Layout (3 : 5 : 4) */}
+      <main className="flex-1 grid grid-cols-12 gap-4 p-4 overflow-hidden min-h-0">
+        {/* Column 1: Analysis & Move List (3 cols) */}
+        <aside className="col-span-3 bg-panel border border-white/10 rounded-2xl p-4 flex flex-col overflow-hidden shadow-2xl">
+          <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-3">
+            <h2 className="text-xs font-semibold text-white/50 uppercase tracking-wider">Evaluation & Moves</h2>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" title="Engine Ready" />
           </div>
-          <div style={styles.analysisDetails}>
-            <span style={styles.badge}>⚠️ Inaccuracy</span>
-            <p style={{ marginTop: '1rem' }}><strong>Best Move:</strong> Rd1</p>
-            <p style={{ color: '#888', fontSize: '0.9rem' }}>
-              Line 1: Rd1 Qc7 2. Bf4 e5<br />
-              Line 2: Bf4 e5 2. Bxe5 Nxe5
+
+          <div className="flex-1 flex flex-col justify-center items-center text-center p-4 border border-dashed border-white/10 rounded-xl bg-surface/30">
+            <div className="text-2xl mb-2">📊</div>
+            <div className="text-sm font-medium text-white/80">Stockfish Engine</div>
+            <p className="text-xs text-white/40 mt-1 max-w-[200px]">
+              Eval bar and move classifications will render here in Day 3.
             </p>
           </div>
-        </div>
+        </aside>
 
-        {/* Panel 3: AI Coach Panel Placeholder */}
-        <div style={{ ...styles.panel, flex: 1.5 }}>
-          <h2 style={styles.panelTitle}>AI Coach Chat</h2>
-          <div style={styles.chatBox}>
-            <div style={styles.messageBubbleUser}>
-              Why was my move on move 23 bad?
-            </div>
-            <div style={styles.messageBubbleCoach}>
-              Your knight on f6 blocks the f-pawn, which stops you from establishing pawn structure control. A better play was Rd1 to secure the open file.
-            </div>
+        {/* Column 2: Interactive Chessboard (5 cols) */}
+        <section className="col-span-5 bg-panel border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden shadow-2xl">
+          <ChessboardPanel />
+        </section>
+
+        {/* Column 3: Raycast AI Coach Chat (4 cols) */}
+        <aside className="col-span-4 bg-panel border border-white/10 rounded-2xl p-4 flex flex-col overflow-hidden shadow-2xl">
+          <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-3">
+            <h2 className="text-xs font-semibold text-white/50 uppercase tracking-wider">Raycast AI Coach</h2>
+            <span className="text-[10px] px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-medium">
+              DeepSeek-R1
+            </span>
           </div>
-          <div style={styles.chatInputMock}>
-            <input type="text" placeholder="Ask coach..." style={styles.input} disabled />
-            <button style={styles.sendBtn}>Ask</button>
+
+          <div className="flex-1 flex flex-col justify-center items-center text-center p-4 border border-dashed border-white/10 rounded-xl bg-surface/30">
+            <div className="text-2xl mb-2">🧠</div>
+            <div className="text-sm font-medium text-white/80">Conversational Grandmaster</div>
+            <p className="text-xs text-white/40 mt-1 max-w-[240px]">
+              Streaming conversational coaching will render here in Day 4.
+            </p>
           </div>
-        </div>
-      </div>
+        </aside>
+      </main>
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    backgroundColor: '#121212',
-    color: '#ffffff',
-    fontFamily: 'system-ui, sans-serif',
-    overflow: 'hidden',
-  },
-  navbar: {
-    height: '60px',
-    borderBottom: '1px solid #333',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 2rem',
-    backgroundColor: '#1a1a1a',
-  },
-  workspace: {
-    display: 'flex',
-    flex: 1,
-    padding: '1rem',
-    gap: '1rem',
-    overflow: 'hidden',
-  },
-  panel: {
-    backgroundColor: '#1e1e1e',
-    borderRadius: '8px',
-    border: '1px solid #333',
-    padding: '1.2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-  },
-  panelTitle: {
-    margin: '0 0 1rem 0',
-    fontSize: '1.1rem',
-    color: '#888',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  boardMock: {
-    flex: 1,
-    backgroundColor: '#151515',
-    borderRadius: '6px',
-    border: '1px solid #222',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  controlsMock: {
-    marginTop: '1rem',
-    textAlign: 'center',
-    padding: '0.8rem',
-    backgroundColor: '#252525',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-    color: '#aaa',
-  },
-  evalBarMock: {
-    height: '120px',
-    border: '1px solid #444',
-    borderRadius: '4px',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: '1rem',
-  },
-  analysisDetails: {
-    backgroundColor: '#151515',
-    padding: '1rem',
-    borderRadius: '6px',
-    flex: 1,
-  },
-  badge: {
-    backgroundColor: '#b58900',
-    color: '#fff',
-    padding: '0.2rem 0.6rem',
-    borderRadius: '4px',
-    fontSize: '0.8rem',
-    fontWeight: 'bold',
-  },
-  chatBox: {
-    flex: 1,
-    backgroundColor: '#151515',
-    borderRadius: '6px',
-    padding: '1rem',
-    overflowY: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    marginBottom: '1rem',
-  },
-  messageBubbleUser: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#0070f3',
-    color: '#fff',
-    padding: '0.8rem',
-    borderRadius: '8px 8px 0 8px',
-    maxWidth: '80%',
-    fontSize: '0.9rem',
-  },
-  messageBubbleCoach: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#252525',
-    color: '#fff',
-    padding: '0.8rem',
-    borderRadius: '8px 8px 8px 0',
-    maxWidth: '80%',
-    fontSize: '0.9rem',
-    lineHeight: '1.4',
-  },
-  chatInputMock: {
-    display: 'flex',
-    gap: '0.5rem',
-  },
-  input: {
-    flex: 1,
-    backgroundColor: '#222',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    padding: '0.6rem',
-    color: '#fff',
-  },
-  sendBtn: {
-    backgroundColor: '#333',
-    color: '#aaa',
-    border: 'none',
-    padding: '0 1.2rem',
-    borderRadius: '4px',
-    cursor: 'not-allowed',
-  },
-};
